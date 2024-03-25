@@ -1,6 +1,7 @@
-// import { getSession } from "@/auth/server"
+"use server"
 
-import { getSession } from "@/auth"
+import { getSession, getToken } from "@/auth"
+import { redirect } from "next/navigation"
 
 type ExtraAttrs = {
   auth?: boolean 
@@ -39,11 +40,11 @@ const getBackUrl = () => {
 const makeRequest = async (url: string, request: RequestInit & ExtraAttrs) => {
 
   if(request.auth) {
-    const session = await getSession()
-    console.log(session)
+    const token = await getToken()
+    if(!token) redirect('/login')
     request.headers = {
       ...request.headers,
-      authorization: `Bearer ${'replace_with_token'}`
+      authorization: `Bearer ${token}`
     }
   }
 

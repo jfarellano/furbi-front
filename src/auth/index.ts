@@ -1,4 +1,4 @@
-import { POST } from "@/api/fetch"
+import { POST } from "@/api/fetch";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
@@ -39,12 +39,17 @@ export async function getSession(): Promise<Session | null> {
   return await jwtDecode(session);
 }
 
+export function getToken(): string|null {
+  const session = cookies().get("session")?.value;
+  if (!session) return null;
+  return session;
+}
+
 export async function updateSession(request: NextRequest) {
   const session = request.cookies.get("session")?.value;
   if (!session) return;
 
   // Refresh the session so it doesn't expire
-  const parsed = await jwtDecode(session);
   const expires = new Date(Date.now() + SESSION_DURATION);
   const res = NextResponse.next();
   res.cookies.set({

@@ -1,46 +1,46 @@
 "use server"
-import { redirect } from "next/navigation"
+
+import { getClients } from "@/api/clients"
 import { getSession } from "@/auth"
-import { getUsers } from "@/api/users"
 import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
-import { UserDelete } from "./delete-button"
+import { redirect } from "next/navigation"
+import { ClientDelete } from "./delete-button"
+
 
 export default async function Page() {
   const session = await getSession()
-  const users: any[] = await getUsers()
+  const clients: any[] = await getClients()
 
   if(!session) redirect('/')
 
-  return users ? (
+  return clients ? (
     <Box sx={{
       width: '100%'
     }}>
       <Typography variant="h3">
-        Users
+        Clients
       </Typography>
-      <Button sx={{marginLeft: 'auto'}} variant="contained" href="/users/new">Create</Button>
+      <Button sx={{marginLeft: 'auto'}} variant="contained" href="/clients/new">Create</Button>
       <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell>Email</TableCell>
             <TableCell align="right">Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((user) => (
+          {clients.map((client) => (
             <TableRow
-              key={user.id}
+              key={client.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {user.name}
+                {client.name}
               </TableCell>
-              <TableCell>{user.email}</TableCell>
               <TableCell align="right">
-                <Button href={`/users/${user.id}`}>EDIT</Button>
-                <UserDelete id={user.id} />
+                <Button href={`/clients/${client.id}`}>EDIT</Button>
+                <ClientDelete id={client.id} />
               </TableCell>
             </TableRow>
           ))}
