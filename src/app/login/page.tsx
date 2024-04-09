@@ -1,10 +1,10 @@
 "use client"
-import { Button, TextField, useTheme } from "@mui/material"
+import { Button, TextField, Typography, useTheme } from "@mui/material"
 import { FormEvent, useEffect, useState } from "react"
 import { ActGetSession, ActLoging } from "./actions"
 import { useRouter } from "next/navigation"
 
-export default async function Page() {
+export default function Page() {
   const router = useRouter()
   const [error, setError] = useState(false)
   const theme = useTheme()
@@ -32,7 +32,7 @@ export default async function Page() {
       }} onSubmit={handleSubmit}>
         <TextField type="email" name="email" label="Email" required />
         <TextField type="password" name="password" label="Password" required />
-        { error ? <p color="error">Error</p> : <></>}
+        { error ? <Typography fontSize={12} color='error'>Credenciales incorrectas</Typography> : <></>}
         <Button variant="contained" type="submit">Login</Button>
       </form>
     </>

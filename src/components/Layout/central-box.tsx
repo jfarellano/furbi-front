@@ -15,7 +15,8 @@ const Box = styled('div') (({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
   width: '400px',
-  minHeight: '300px',
+  minHeight: '400px',
+  height: 'auto',
   backgroundColor: theme.palette.background.paper,
   borderRadius: 20
 }));
