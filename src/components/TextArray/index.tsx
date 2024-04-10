@@ -9,17 +9,20 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { HelpTooltip } from "../HelpTooltip";
 
 export const TextArray = ({
   options,
   setOptions,
   name,
   label,
+  helpText
 }: {
   name: string;
   options: string[] | null;
   setOptions: Function;
   label: string;
+  helpText?: string;
 }) => {
   const theme = useTheme();
   const [newValue, setNewValue] = useState("");
@@ -50,7 +53,7 @@ export const TextArray = ({
 
   return (
     <FormGroup>
-      <FormLabel component="legend">{label}</FormLabel>
+      <FormLabel component="legend">{label}{helpText ? <HelpTooltip helpText={helpText}/> : <></>}</FormLabel>
       {(options || []).map((option, index) => {
         return (
           <Box

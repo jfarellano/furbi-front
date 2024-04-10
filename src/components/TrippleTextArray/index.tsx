@@ -11,13 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
-
-const emptyVal = (fields: {name: string, key:string}[]) => {
-  return {
-    [fields[0].key]: '',
-    [fields[1].key]: '',
-  }
-}
+import { HelpTooltip } from "../HelpTooltip";
 
 export const TrippleTextArray = ({
   options,
@@ -26,7 +20,8 @@ export const TrippleTextArray = ({
   selection_field,
   name,
   label,
-  fields
+  fields,
+  helpText
 }: {
   name: string;
   fields: {name: string, key:string}[]
@@ -35,6 +30,7 @@ export const TrippleTextArray = ({
   label: string;
   selection: string[];
   selection_field: string;
+  helpText?: string;
 }) => {
   const theme = useTheme();
   const [value, setValue] = useState<string | null>(null);
@@ -79,7 +75,7 @@ export const TrippleTextArray = ({
 
   return (
     <FormGroup>
-      <FormLabel component="legend">{label}</FormLabel>
+      <FormLabel component="legend">{label}{helpText ? <HelpTooltip helpText={helpText}/> : <></>}</FormLabel>
       {(options || []).map((option, index) => {
         return (
           <Box

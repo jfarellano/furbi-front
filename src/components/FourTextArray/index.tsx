@@ -11,6 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { HelpTooltip } from "../HelpTooltip";
 
 export const FourTextArray = ({
   options,
@@ -19,7 +20,8 @@ export const FourTextArray = ({
   selection_field,
   name,
   label,
-  fields
+  fields,
+  helpText
 }: {
   name: string;
   fields: {name: string, key:string}[]
@@ -28,6 +30,7 @@ export const FourTextArray = ({
   label: string;
   selection: string[];
   selection_field: string;
+  helpText?: string;
 }) => {
   const theme = useTheme();
   const [value, setValue] = useState<string | null>(null);
@@ -73,7 +76,7 @@ export const FourTextArray = ({
 
   return (
     <FormGroup>
-      <FormLabel component="legend">{label}</FormLabel>
+      <FormLabel component="legend">{label}{helpText ? <HelpTooltip helpText={helpText}/> : <></>}</FormLabel>
       {(options || []).map((option, index) => {
         return (
           <Box

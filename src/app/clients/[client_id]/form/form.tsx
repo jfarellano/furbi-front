@@ -133,6 +133,7 @@ export const ClientForm = ({ clientForm }: { clientForm: any }) => {
           options={offering}
           selection={formClient.offering}
           setSelection={handleChange}
+          helpText="Hola quiero ayudarte"
         />
         <TextArray // 3.2  A qué rubro o industria pertenecen, y el tamaño de la organización y cualquier otra característica de la misma que pueda ser relevante.
           name={"target"}

@@ -20,7 +20,8 @@ export const DoubleSelectArray = ({
   selection_field,
   name,
   label,
-  field
+  field,
+  helpText
 }: {
   name: string;
   field: {name: string, key:string}
@@ -29,6 +30,7 @@ export const DoubleSelectArray = ({
   label: string;
   selection: string[];
   selection_field: string;
+  helpText?: string;
 }) => {
   const theme = useTheme();
   const [value, setValue] = useState<string | null>(null);
@@ -72,7 +74,7 @@ export const DoubleSelectArray = ({
 
   return (
     <FormGroup>
-      <FormLabel component="legend">{label}</FormLabel>
+      <FormLabel component="legend">{label}{helpText ? <HelpTooltip helpText={helpText}/> : <></>}</FormLabel>
       {(options || []).map((option, index) => {
         return (
           <Box

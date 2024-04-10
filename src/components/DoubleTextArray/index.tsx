@@ -9,6 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { HelpTooltip } from "../HelpTooltip";
 
 const emptyVal = (fields: {name: string, key:string}[]) => {
   return {
@@ -22,13 +23,15 @@ export const DoubleTextArray = ({
   setOptions,
   name,
   label,
-  fields
+  fields,
+  helpText
 }: {
   name: string;
   fields: {name: string, key:string}[]
   options: any[] | undefined;
   setOptions: Function;
   label: string;
+  helpText?: string;
 }) => {
   const theme = useTheme();
   const [newValue, setNewValue] = useState(emptyVal(fields));
@@ -67,7 +70,7 @@ export const DoubleTextArray = ({
 
   return (
     <FormGroup>
-      <FormLabel component="legend">{label}</FormLabel>
+      <FormLabel component="legend">{label}{helpText ? <HelpTooltip helpText={helpText}/> : <></>}</FormLabel>
       {(options || []).map((option, index) => {
         return (
           <Box
