@@ -4,7 +4,7 @@ import { getClients } from "@/api/clients"
 import { getSession } from "@/auth"
 import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import { redirect } from "next/navigation"
-import { ClientDelete } from "./delete-button"
+import ClientTableRow from "./client-table-row"
 
 
 export default async function Page() {
@@ -31,18 +31,7 @@ export default async function Page() {
         </TableHead>
         <TableBody>
           {clients.map((client) => (
-            <TableRow
-              key={client.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {client.name}
-              </TableCell>
-              <TableCell align="right">
-                <Button href={`/clients/${client.id}`}>EDIT</Button>
-                <ClientDelete id={client.id} />
-              </TableCell>
-            </TableRow>
+            <ClientTableRow key={client.id} client={client} />
           ))}
         </TableBody>
       </Table>
