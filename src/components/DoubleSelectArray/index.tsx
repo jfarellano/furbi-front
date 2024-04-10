@@ -11,6 +11,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { HelpTooltip } from "../HelpTooltip";
 
 
 export const DoubleSelectArray = ({
