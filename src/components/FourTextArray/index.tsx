@@ -3,15 +3,12 @@ import { Add, Delete } from "@mui/icons-material";
 import {
   Autocomplete,
   Box,
-  FormGroup,
-  FormLabel,
   IconButton,
   TextField,
   Typography,
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
-import { HelpTooltip } from "../HelpTooltip";
 import { BaseField } from "../BaseField";
 
 export const FourTextArray = ({
@@ -22,7 +19,8 @@ export const FourTextArray = ({
   name,
   label,
   fields,
-  helpText
+  helpText,
+  required = false
 }: {
   name: string;
   fields: {name: string, key:string}[]
@@ -32,6 +30,7 @@ export const FourTextArray = ({
   selection: string[];
   selection_field: string;
   helpText?: string;
+  required?: boolean;
 }) => {
   const theme = useTheme();
   const [value, setValue] = useState<string | null>(null);
@@ -76,7 +75,7 @@ export const FourTextArray = ({
   }
 
   return (
-    <BaseField label={label} helpText={helpText}>
+    <BaseField label={label} helpText={helpText} required={required}>
       {(options || []).map((option, index) => {
         return (
           <Box

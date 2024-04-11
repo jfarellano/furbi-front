@@ -1,6 +1,5 @@
 "use client";
-import { Checkbox, FormControlLabel, FormGroup, FormLabel } from "@mui/material";
-import { HelpTooltip } from "../HelpTooltip";
+import { Checkbox, FormControlLabel } from "@mui/material";
 import { BaseField } from "../BaseField";
 
 export const Checkboxes = ({
@@ -9,7 +8,8 @@ export const Checkboxes = ({
   setSelection,
   name,
   label,
-  helpText
+  helpText,
+  required = false
 }: {
   name: string;
   options: { name: string; key: string }[];
@@ -17,6 +17,7 @@ export const Checkboxes = ({
   setSelection: Function;
   label: string
   helpText?: string;
+  required?: boolean;
 }) => {
   const checked = (key: string) => {
     return selection ? selection.includes(key) : false;
@@ -37,7 +38,7 @@ export const Checkboxes = ({
   };
 
   return (
-    <BaseField label={label} helpText={helpText}>
+    <BaseField label={label} helpText={helpText} required={required}>
       {options.map((option) => {
         return (
           <FormControlLabel

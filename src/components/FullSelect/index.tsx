@@ -1,12 +1,9 @@
 "use client";
 import {
-  FormGroup,
-  FormLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { HelpTooltip } from "../HelpTooltip";
 import { BaseField } from "../BaseField";
 
 export const FullSelect = ({
@@ -16,6 +13,7 @@ export const FullSelect = ({
   name,
   label,
   helpText,
+  required = false
 }: {
   name: string;
   options: { name: string; key: string }[];
@@ -23,6 +21,7 @@ export const FullSelect = ({
   setValue: Function;
   label: string;
   helpText?: string;
+  required?: boolean;
 }) => {
   const handleChange = (event: SelectChangeEvent<string>) => {
     setValue({
@@ -34,7 +33,7 @@ export const FullSelect = ({
   };
 
   return (
-    <BaseField label={label} helpText={helpText}>
+    <BaseField label={label} helpText={helpText} required={required}>
       <Select value={value || undefined} label="Age" onChange={handleChange}>
         {options.map((option) => (
           <MenuItem key={option.key} value={option.key}>{option.name}</MenuItem>

@@ -1,12 +1,5 @@
 "use client";
-import {
-  Box,
-  Button,
-  Tab,
-  Tabs,
-  Typography,
-  styled,
-} from "@mui/material";
+import { Box, Button, Tab, Tabs, Typography, styled } from "@mui/material";
 import { useState } from "react";
 import { Checkboxes } from "@/components/Checkboxes";
 import {
@@ -57,7 +50,13 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_id:string}) => {
+export const ClientForm = ({
+  clientForm,
+  client_id,
+}: {
+  clientForm: any;
+  client_id: string;
+}) => {
   const [formClient, setFormClient] = useState(clientForm);
   const [error, setError] = useState(false);
   const [tab, setTab] = useState(0);
@@ -90,33 +89,48 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
     // Generate file
     if (result) window.location.href = `/clients/${client_id}/show`;
     else setError(true);
-  }
+  };
 
   const validForm = () => {
-    let errors: {[key in string]: string} = {}
-    const requiredMessage = 'campo requerido para generacion'
+    let errors: { [key in string]: string } = {};
+    const requiredMessage = "campo requerido para generacion";
 
-    if(!validateRequired(formClient.organizationType)) errors['organizationType'] = requiredMessage
-    if(!validateRequired(formClient.clientTypes)) errors['clientTypes'] = requiredMessage
-    if(!validateRequired(formClient.offer)) errors['offer'] = requiredMessage
-    if(!validateRequired(formClient.organizarionAreas)) errors['organizarionAreas'] = requiredMessage
-    if(!validateRequired(formClient.offering)) errors['offering'] = requiredMessage
-    if(!validateRequired(formClient.target)) errors['target'] = requiredMessage
-    if(!validateRequired(formClient.clients)) errors['clients'] = requiredMessage
-    if((formClient.clients == "SI" || formClient.clients == "HIBRIDO") && !validateRequired(formClient.buyer)) errors['buyer'] = requiredMessage
-    if((formClient.clients == "NO" || formClient.clients == "HIBRIDO") && !validateRequired(formClient.users)) errors['users'] = requiredMessage
-    if(!validateRequired(formClient.solve)) errors['solve'] = requiredMessage
-    if(!validateRequired(formClient.otherPublics)) errors['otherPublics'] = requiredMessage
-    if(!validateRequired(formClient.publicActions)) errors['publicActions'] = requiredMessage
-    if(!validateRequired(formClient.kpi)) errors['kpi'] = requiredMessage
-    if(!validateRequired(formClient.marketingTechnics)) errors['marketingTechnics'] = requiredMessage
-    if(!validateRequired(formClient.monitoredKpis)) errors['monitoredKpis'] = requiredMessage
-    if(!validateRequired(formClient.touchPoints)) errors['touchPoints'] = requiredMessage
-    if(!validateRequired(formClient.uniqueness)) errors['uniqueness'] = requiredMessage
-    if(!validateRequired(formClient.recognizedCharacteristic)) errors['recognizedCharacteristic'] = requiredMessage
-    
-    return errors
-  }
+    if (!validateRequired(formClient.organizationType))
+      errors["organizationType"] = "1";
+    if (!validateRequired(formClient.clientTypes)) errors["clientTypes"] = "2";
+    if (!validateRequired(formClient.offer)) errors["offer"] = "3";
+    if (!validateRequired(formClient.organizarionAreas))
+      errors["organizarionAreas"] = "4";
+    if (!validateRequired(formClient.offering)) errors["offering"] = "5";
+    if (!validateRequired(formClient.target)) errors["target"] = "6";
+    if (!validateRequired(formClient.clients)) errors["clients"] = "7";
+    if (
+      (formClient.clients == "SI" || formClient.clients == "HIBRIDO") &&
+      !validateRequired(formClient.buyer)
+    )
+      errors["buyer"] = "8";
+    if (
+      (formClient.clients == "NO" || formClient.clients == "HIBRIDO") &&
+      !validateRequired(formClient.users)
+    )
+      errors["users"] = "9";
+    if (!validateRequired(formClient.solve)) errors["solve"] = "10";
+    if (!validateRequired(formClient.otherPublics))
+      errors["otherPublics"] = "13";
+    if (!validateRequired(formClient.publicActions))
+      errors["publicActions"] = "19";
+    if (!validateRequired(formClient.kpi)) errors["kpi"] = "20";
+    if (!validateRequired(formClient.marketingTechnics))
+      errors["marketingTechnics"] = "21";
+    if (!validateRequired(formClient.monitoredKpis))
+      errors["monitoredKpis"] = "22";
+    if (!validateRequired(formClient.touchPoints)) errors["touchPoints"] = "25";
+    if (!validateRequired(formClient.uniqueness)) errors["uniqueness"] = "28";
+    if (!validateRequired(formClient.recognizedCharacteristic))
+      errors["recognizedCharacteristic"] = "29";
+
+    return errors;
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -129,11 +143,15 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
         sx={{
           display: "flex",
           gap: 1,
-          width: '100%',
-          justifyContent: 'flex-end'
+          width: "100%",
+          justifyContent: "flex-end",
         }}
       >
-        <Button variant="contained" disabled={Object.keys(validForm()).length > 0 ? true : false} onClick={handleGenerate}>
+        <Button
+          variant="contained"
+          disabled={Object.keys(validForm()).length > 0 ? true : false}
+          onClick={handleGenerate}
+        >
           Generar
         </Button>
         <Button variant="contained" type="submit">
@@ -143,29 +161,47 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
           Cancelar
         </Button>
       </Box>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          width: "100%",
+          marginLeft: 2
+        }}
+      >
+        {Object.keys(validForm()).length > 0 ? (
+          <Typography color="error" fontSize={12}>
+            Falta diligenciar las preguntas requeridas para poder generar la matriz:{" "}
+            {Object.values(validForm()).join(", ")}
+          </Typography>
+        ) : (
+          <></>
+        )}
+      </Box>
       <Tabs value={tab} onChange={(event, newValue) => setTab(newValue)}>
         <Tab label="DEFINICION DE EMPRESA" tabIndex={0} />
         <Tab label="DEFINICION DE CLIENTE" tabIndex={1} />
-        <Tab label="OBJETIVOS E INDICADORE" tabIndex={2} />
+        <Tab label="OBJETIVOS E INDICADORES" tabIndex={2} />
         <Tab label="ECOSISTEMA DIGITAL" tabIndex={3} />
         <Tab label="COMPETENCIA" tabIndex={4} />
-        <Tab label="PROCESO COMERCIAL" tabIndex={5} />
-        <Tab label="BRANDING Y MARCA EMPLEADORA" tabIndex={6} />
+        <Tab label="BRANDING Y MARCA EMPLEADORA" tabIndex={5} />
       </Tabs>
       <CustomTabPanel value={tab} index={0}>
         <FullSelect // 1
-          label="¿Qué tipo de organización es?"
+          label="(1) ¿Qué tipo de organización es?"
           name={"organizationType"}
           options={organizationType}
           value={formClient.organizationType}
           setValue={handleChange}
+          required={true}
         />
         <Checkboxes // 1
-          label="¿Qué tipo de clientes tiene laorganización?"
+          label="(2) ¿Qué tipo de clientes tiene la organización?"
           name={"clientTypes"}
           options={clientTypes}
           selection={formClient.clientTypes}
           setSelection={handleChange}
+          required={true}
         />
       </CustomTabPanel>
 
@@ -174,36 +210,44 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
           name={"offer"}
           options={formClient.offer}
           setOptions={handleChange}
-          label={"Listar lo que ofrece o hace la organización en general"}
+          label={"(3) Listar lo que ofrece o hace la organización en general"}
+          helpText="Enumerar uno a uno lo que ofrece la organizacion."
+          required={true}
         />
         <TextArray // 2.1
           name={"organizarionAreas"}
           options={formClient.organizarionAreas}
           setOptions={handleChange}
           label={
-            "¿Trabajamos para toda la organización o para un área específica? Si es un área específica, definir cuál es."
+            "(4) ¿Trabajamos para toda la organización o para un área específica? Si es un área específica, definir cuál es."
           }
+          required={true}
         />
         <Checkboxes // 3.1
-          label="¿La organizacion vende productos, servicios o ambos?"
+          label="(5) ¿La organizacion vende productos, servicios o ambos?"
           name={"offering"}
           options={offering}
           selection={formClient.offering}
           setSelection={handleChange}
-          helpText="Hola quiero ayudarte"
+          required={true}
         />
         <TextArray // 3.2  A qué rubro o industria pertenecen, y el tamaño de la organización y cualquier otra característica de la misma que pueda ser relevante.
           name={"target"}
           options={formClient.target}
           setOptions={handleChange}
-          label={"Listar y describir el tipo de empresas a las que se dirigen."}
+          label={
+            "(6) Listar y describir el tipo de clientes a los que se dirigen."
+          }
+          required={true}
         />
         <FullSelect // 3.3
-          label="¿Los usuarios son los mismos que los clientes?"
+          label="(7) ¿Los usuarios son los mismos que los clientes?"
           name={"clients"}
           options={clients}
           value={formClient.clients}
           setValue={handleChange}
+          helpText="Tener en cuenta si el usuario final es el mismo que el que adquiere el producto o servicio."
+          required={true}
         />
         {formClient.clients &&
         (formClient.clients == "SI" || formClient.clients == "HIBRIDO") ? (
@@ -215,7 +259,8 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
             ]}
             options={formClient.buyer}
             setOptions={handleChange}
-            label={"¿quiénes son los clientes?"}
+            label={"(8) ¿Quiénes son los clientes?"}
+            required={true}
           />
         ) : (
           <></>
@@ -230,7 +275,8 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
             ]}
             options={formClient.users}
             setOptions={handleChange}
-            label={"¿quiénes son los usuarios?"}
+            label={"(9) ¿Quiénes son los usuarios?"}
+            required={true}
           />
         ) : (
           <></>
@@ -241,22 +287,23 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
           field={{ name: "Solucion", key: "solve" }}
           options={formClient.solve}
           setOptions={handleChange}
-          label={"¿Qué problemas solucionas para tus usuarios/clientes?"}
+          label={"(10) ¿Qué problemas solucionas para tus usuarios/clientes?"}
           selection={getUsersClients()}
           selection_field={"client"}
+          required={true}
         />
         <FullTextField // 6
           name="markets"
           value={formClient.markets}
           setValue={handleChange}
-          label={"¿A qué mercados te diriges?"}
+          label={"(11) ¿A qué mercados te diriges?"}
         />
 
         <FullTextField // 6
           name="marketSize"
           value={formClient.marketSize}
           setValue={handleChange}
-          label={"¿Conoces el tamaño del mercado al que te diriges?"}
+          label={"(12) ¿Conoces el tamaño del mercado al que te diriges?"}
         />
         <TrippleTextArray // 9
           name={"otherPublics"}
@@ -267,44 +314,47 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
           options={formClient.otherPublics}
           setOptions={handleChange}
           label={
-            "¿Hay otros públicos con los que sea relevante comunicarte además de los posibles compradores, qué problema le resuelves y qué tienes para ofrecerle?"
+            "(13) ¿Hay otros públicos con los que sea relevante comunicarte además de los posibles compradores? En este caso qué problema le resuelves y qué tienes para ofrecerle"
           }
           selection={otherPublics}
           selection_field={"client"}
+          required={true}
         />
         <FullTextField // 10
           name="buyingPatterns"
           value={formClient.buyingPatterns}
           setValue={handleChange}
           label={
-            "¿Hay patrones de compra por temporada que afectan a tus ventas?"
+            "(14) ¿Hay patrones de compra por temporada que afectan a tus ventas?"
           }
         />
         <FullTextField // 12
           name="clientTimeExpectancy"
           value={formClient.clientTimeExpectancy}
           setValue={handleChange}
-          label={"¿Cuál es el valor del tiempo de vida de uno de tus clientes?"}
+          label={
+            "(15) ¿Cuál es el valor del tiempo de vida de uno de tus clientes?"
+          }
         />
         <FullTextField // 13
           name="retentionCapacity"
           value={formClient.retentionCapacity}
           setValue={handleChange}
           label={
-            "¿Capacidad de retención? ¿Qué estrategias usas para retener a tus clientes?"
+            "(16) Capacidad de retención. ¿Qué estrategias usas para retener a tus clientes?"
           }
         />
         <FullTextField // 14
           name="ticketAverage"
           value={formClient.ticketAverage}
           setValue={handleChange}
-          label={"¿Cuál es el ticket promedio de cada servicio?"}
+          label={"(17) ¿Cuál es el ticket promedio de cada servicio?"}
         />
         <FullTextField // 15
           name="priceComparison"
           value={formClient.priceComparison}
           setValue={handleChange}
-          label={"¿Cómo es tu precio respecto a la competencia?"}
+          label={"(18) ¿Cómo es tu precio respecto a la competencia?"}
         />
       </CustomTabPanel>
 
@@ -318,9 +368,10 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
           ]}
           options={formClient.publicActions}
           setOptions={handleChange}
-          label={"¿Qué te gustaría que el público sepa, sienta y/o haga?"}
+          label={"(19) ¿Qué te gustaría que el público sepa, sienta y/o haga?"}
           selection={getUsersClients()}
           selection_field={"client"}
+          required={true}
         />
         <TrippleTextArray // 19
           name={"kpi"}
@@ -331,10 +382,11 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
           options={formClient.kpi}
           setOptions={handleChange}
           label={
-            "¿Hay otros públicos con los que sea relevante comunicarte además de los posibles compradores, qué problema le resuelves y qué tienes para ofrecerle?"
+            "(20) ¿Qué tipo de resultados medibles esperas obtener? ¿En qué tiempo?"
           }
           selection={kpi}
           selection_field={"objective"}
+          required={true}
         />
 
         <DoubleSelectArray // 21
@@ -343,24 +395,34 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
           options={formClient.marketingTechnics}
           setOptions={handleChange}
           label={
-            "De las siguientes técnicas de marketing, cuáles creemos que son las más adecuadas para llegar a los objetivos (esto no se le pregunta al cliente sino que lo completa el entrevistador). Esto aplica para las Actividades."
+            "(21) De las siguientes técnicas de marketing, cuáles creemos que son las más adecuadas para llegar a los objetivos."
           }
           selection={technics}
           selection_field={"technics"}
+          helpText="Esto no se le pregunta al cliente sino que lo completa el entrevistador."
         />
         <TextArray // 42
           name={"monitoredKpis"}
           options={formClient.monitoredKpis}
           setOptions={handleChange}
-          label={"¿Qué métricas de marketing monitorizan en la actualidad?"}
+          label={
+            "(22) ¿Qué métricas de marketing monitorizan en la actualidad?"
+          }
+          required={true}
         />
         <TextArray // 44, 45
           name={"roiStrategies"}
           options={formClient.roiStrategies}
           setOptions={handleChange}
           label={
-            "¿Qué estrategias fueron las más exitosas o produjeron más ROI para tu empresa en el año anterior?"
+            "(23) ¿Qué estrategias fueron las más exitosas o produjeron más ROI para tu empresa en el año anterior?"
           }
+        />
+        <FullTextField // 38
+          name={"growthObjective"}
+          value={formClient.growthObjective}
+          setValue={handleChange}
+          label={"(24) ¿Cuál es tu objetivo de crecimiento en ventas?"}
         />
       </CustomTabPanel>
 
@@ -371,10 +433,11 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
           options={formClient.touchPoints}
           setOptions={handleChange}
           label={
-            "Que touch points tienes actualmente y cuales te parece importante incorporar?"
+            "(25) ¿Qué touch points tienes actualmente y cuáles te parece importante incorporar?"
           }
           selection={touchPoints}
           selection_field={"media"}
+          required={true}
         />
       </CustomTabPanel>
 
@@ -387,48 +450,41 @@ export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_
           ]}
           options={formClient.opposition}
           setOptions={handleChange}
-          label={"¿Quién es la competencia?"}
+          label={"(26) ¿Quién es la competencia?"}
         />
         <FullTextField // 30
           name={"oppositionMarketing"}
           value={formClient.oppositionMarketing}
           setValue={handleChange}
           label={
-            "¿Qué marketing creó la competencia que desearías haber creado tú? O una campaña o acción de marketing que sea referencia para tí."
+            "(27) ¿Qué marketing creó la competencia que desearías haber creado tú? O una campaña o acción de marketing que sea referencia para tí."
           }
         />
       </CustomTabPanel>
 
       <CustomTabPanel value={tab} index={5}>
-        <FullTextField // 38
-          name={"growthObjective"}
-          value={formClient.growthObjective}
-          setValue={handleChange}
-          label={"¿Cuál es tu objetivo de crecimiento en ventas?"}
-        />
-      </CustomTabPanel>
-
-      <CustomTabPanel value={tab} index={6}>
         <FullTextField // 48
           name={"uniqueness"}
           value={formClient.uniqueness}
           setValue={handleChange}
-          label={"¿Qué hace que tu empresa sea única en el mercado?"}
+          label={"(28) ¿Qué hace que tu empresa sea única en el mercado?"}
+          required={true}
         />
         <FullTextField // 49
           name={"recognizedCharacteristic"}
           value={formClient.recognizedCharacteristic}
           setValue={handleChange}
           label={
-            "¿Por qué característica quieres que tu empresa sea conocida en el mercado?"
+            "(29) ¿Por qué característica quieres que tu empresa sea conocida en el mercado?"
           }
+          required={true}
         />
         <FullTextField // 50
           name={"vision"}
           value={formClient.vision}
           setValue={handleChange}
           label={
-            "¿Cuál es la visión que tienes de tu empresa a 3 años? ¿Y a 10?"
+            "(30) ¿Cuál es la visión que tienes de tu empresa a 3 años? ¿Y a 10?"
           }
         />
       </CustomTabPanel>

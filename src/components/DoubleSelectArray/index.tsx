@@ -23,7 +23,8 @@ export const DoubleSelectArray = ({
   name,
   label,
   field,
-  helpText
+  helpText,
+  required = false
 }: {
   name: string;
   field: {name: string, key:string}
@@ -33,6 +34,7 @@ export const DoubleSelectArray = ({
   selection: string[];
   selection_field: string;
   helpText?: string;
+  required?: boolean;
 }) => {
   const theme = useTheme();
   const [value, setValue] = useState<string | null>(null);
@@ -75,7 +77,7 @@ export const DoubleSelectArray = ({
   }
 
   return (
-    <BaseField label={label} helpText={helpText}>
+    <BaseField label={label} helpText={helpText} required={required}>
       {(options || []).map((option, index) => {
         return (
           <Box

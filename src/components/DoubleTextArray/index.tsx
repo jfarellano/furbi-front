@@ -25,7 +25,8 @@ export const DoubleTextArray = ({
   name,
   label,
   fields,
-  helpText
+  helpText,
+  required = false
 }: {
   name: string;
   fields: {name: string, key:string}[]
@@ -33,6 +34,7 @@ export const DoubleTextArray = ({
   setOptions: Function;
   label: string;
   helpText?: string;
+  required?: boolean;
 }) => {
   const theme = useTheme();
   const [newValue, setNewValue] = useState(emptyVal(fields));
@@ -70,7 +72,7 @@ export const DoubleTextArray = ({
   }
 
   return (
-    <BaseField label={label} helpText={helpText}>
+    <BaseField label={label} helpText={helpText} required={required}>
       {(options || []).map((option, index) => {
         return (
           <Box

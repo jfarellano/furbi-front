@@ -2,14 +2,11 @@
 import { Add, Delete } from "@mui/icons-material";
 import {
   Box,
-  FormGroup,
-  FormLabel,
   IconButton,
   TextField,
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
-import { HelpTooltip } from "../HelpTooltip";
 import { BaseField } from "../BaseField";
 
 export const TextArray = ({
@@ -17,13 +14,15 @@ export const TextArray = ({
   setOptions,
   name,
   label,
-  helpText
+  helpText,
+  required = false
 }: {
   name: string;
   options: string[] | null;
   setOptions: Function;
   label: string;
   helpText?: string;
+  required?: boolean;
 }) => {
   const theme = useTheme();
   const [newValue, setNewValue] = useState("");
@@ -53,7 +52,7 @@ export const TextArray = ({
   };
 
   return (
-    <BaseField label={label} helpText={helpText}>
+    <BaseField label={label} helpText={helpText} required={required}>
       {(options || []).map((option, index) => {
         return (
           <Box
