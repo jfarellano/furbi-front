@@ -4,7 +4,6 @@ import {
   Button,
   Tab,
   Tabs,
-  TextField,
   Typography,
   styled,
 } from "@mui/material";
@@ -28,6 +27,7 @@ import { DoubleSelectArray } from "@/components/DoubleSelectArray";
 import { FullTextField } from "@/components/FullTextField";
 import { FourTextArray } from "@/components/FourTextArray";
 import { ActSaveForm } from "./actions";
+import { validateRequired } from "@/app/helpers";
 
 const Form = styled("form")((theme) => ({
   display: "flex",
@@ -57,7 +57,7 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-export const ClientForm = ({ clientForm }: { clientForm: any }) => {
+export const ClientForm = ({ clientForm, client_id }: { clientForm: any, client_id:string}) => {
   const [formClient, setFormClient] = useState(clientForm);
   const [error, setError] = useState(false);
   const [tab, setTab] = useState(0);
@@ -80,12 +80,69 @@ export const ClientForm = ({ clientForm }: { clientForm: any }) => {
     setError(false);
     const result = await ActSaveForm(formClient.id, formClient);
 
-    if (result) window.location.href = "/clients";
+    if (result) window.location.href = `/clients/${client_id}/show`;
     else setError(true);
   };
 
+  const handleGenerate = async () => {
+    setError(false);
+    const result = await ActSaveForm(formClient.id, formClient);
+    // Generate file
+    if (result) window.location.href = `/clients/${client_id}/show`;
+    else setError(true);
+  }
+
+  const validForm = () => {
+    let errors: {[key in string]: string} = {}
+    const requiredMessage = 'campo requerido para generacion'
+
+    if(!validateRequired(formClient.organizationType)) errors['organizationType'] = requiredMessage
+    if(!validateRequired(formClient.clientTypes)) errors['clientTypes'] = requiredMessage
+    if(!validateRequired(formClient.offer)) errors['offer'] = requiredMessage
+    if(!validateRequired(formClient.organizarionAreas)) errors['organizarionAreas'] = requiredMessage
+    if(!validateRequired(formClient.offering)) errors['offering'] = requiredMessage
+    if(!validateRequired(formClient.target)) errors['target'] = requiredMessage
+    if(!validateRequired(formClient.clients)) errors['clients'] = requiredMessage
+    if((formClient.clients == "SI" || formClient.clients == "HIBRIDO") && !validateRequired(formClient.buyer)) errors['buyer'] = requiredMessage
+    if((formClient.clients == "NO" || formClient.clients == "HIBRIDO") && !validateRequired(formClient.users)) errors['users'] = requiredMessage
+    if(!validateRequired(formClient.solve)) errors['solve'] = requiredMessage
+    if(!validateRequired(formClient.otherPublics)) errors['otherPublics'] = requiredMessage
+    if(!validateRequired(formClient.publicActions)) errors['publicActions'] = requiredMessage
+    if(!validateRequired(formClient.kpi)) errors['kpi'] = requiredMessage
+    if(!validateRequired(formClient.marketingTechnics)) errors['marketingTechnics'] = requiredMessage
+    if(!validateRequired(formClient.monitoredKpis)) errors['monitoredKpis'] = requiredMessage
+    if(!validateRequired(formClient.touchPoints)) errors['touchPoints'] = requiredMessage
+    if(!validateRequired(formClient.uniqueness)) errors['uniqueness'] = requiredMessage
+    if(!validateRequired(formClient.recognizedCharacteristic)) errors['recognizedCharacteristic'] = requiredMessage
+    
+    return errors
+  }
+
   return (
     <Form onSubmit={handleSubmit}>
+      {error ? (
+        <Typography color="error">Hubo un error salvando el cliente</Typography>
+      ) : (
+        <></>
+      )}
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1,
+          width: '100%',
+          justifyContent: 'flex-end'
+        }}
+      >
+        <Button variant="contained" disabled={Object.keys(validForm()).length > 0 ? true : false} onClick={handleGenerate}>
+          Generar
+        </Button>
+        <Button variant="contained" type="submit">
+          Guardar
+        </Button>
+        <Button variant="outlined" href="/clients">
+          Cancelar
+        </Button>
+      </Box>
       <Tabs value={tab} onChange={(event, newValue) => setTab(newValue)}>
         <Tab label="DEFINICION DE EMPRESA" tabIndex={0} />
         <Tab label="DEFINICION DE CLIENTE" tabIndex={1} />
@@ -375,25 +432,6 @@ export const ClientForm = ({ clientForm }: { clientForm: any }) => {
           }
         />
       </CustomTabPanel>
-
-      {error ? (
-        <Typography color="error">Hubo un error salvando el cliente</Typography>
-      ) : (
-        <></>
-      )}
-      <Box
-        sx={{
-          display: "flex",
-          gap: 1,
-        }}
-      >
-        <Button variant="contained" type="submit">
-          Guardar
-        </Button>
-        <Button variant="outlined" href="/clients">
-          Cancelar
-        </Button>
-      </Box>
     </Form>
   );
 };

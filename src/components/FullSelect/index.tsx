@@ -7,6 +7,7 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { HelpTooltip } from "../HelpTooltip";
+import { BaseField } from "../BaseField";
 
 export const FullSelect = ({
   options,
@@ -33,13 +34,12 @@ export const FullSelect = ({
   };
 
   return (
-    <FormGroup>
-      <FormLabel component="legend">{label}{helpText ? <HelpTooltip helpText={helpText}/> : <></>}</FormLabel>
+    <BaseField label={label} helpText={helpText}>
       <Select value={value || undefined} label="Age" onChange={handleChange}>
         {options.map((option) => (
           <MenuItem key={option.key} value={option.key}>{option.name}</MenuItem>
         ))}
       </Select>
-    </FormGroup>
+    </BaseField>
   );
 };

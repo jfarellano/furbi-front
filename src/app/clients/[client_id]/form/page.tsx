@@ -10,7 +10,7 @@ export default async function Page({params}:{params: {client_id: string}}) {
       <Typography variant="h3">
         Formulario AVC
       </Typography>
-      <ClientForm clientForm={clientForm}/>
+      <ClientForm clientForm={clientForm} client_id={params.client_id}/>
     </>
   ) : 'Error cargando el cliente'
 }

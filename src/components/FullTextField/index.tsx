@@ -5,6 +5,7 @@ import {
   TextField,
 } from "@mui/material";
 import { HelpTooltip } from "../HelpTooltip";
+import { BaseField } from "../BaseField";
 
 export const FullTextField = ({
   value,
@@ -20,9 +21,8 @@ export const FullTextField = ({
   helpText?: string;
 }) => {
   return (
-    <FormGroup>
-      <FormLabel component="legend">{label}{helpText ? <HelpTooltip helpText={helpText}/> : <></>}</FormLabel>
+    <BaseField label={label} helpText={helpText}>
       <TextField value={value} onChange={setValue} name={name}/>
-    </FormGroup>
+    </BaseField>
   );
 };

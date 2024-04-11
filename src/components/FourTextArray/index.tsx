@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { HelpTooltip } from "../HelpTooltip";
+import { BaseField } from "../BaseField";
 
 export const FourTextArray = ({
   options,
@@ -75,8 +76,7 @@ export const FourTextArray = ({
   }
 
   return (
-    <FormGroup>
-      <FormLabel component="legend">{label}{helpText ? <HelpTooltip helpText={helpText}/> : <></>}</FormLabel>
+    <BaseField label={label} helpText={helpText}>
       {(options || []).map((option, index) => {
         return (
           <Box
@@ -170,6 +170,6 @@ export const FourTextArray = ({
           </IconButton>
         </Box>
       </Box>
-    </FormGroup>
+    </BaseField>
   );
 };
