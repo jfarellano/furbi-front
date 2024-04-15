@@ -53,3 +53,27 @@ export const deleteClient = async (id: string) => {
 
   return true
 }
+
+
+export const clientFolder = async (id: string) => {
+  const response = await GET(`/clients/folder/${id}`, {
+    auth: true
+  })
+  
+  if(!response.ok) return null
+
+  return await response.json()
+}
+
+export const clientFile = async (name: string) => {
+  const response = await POST(`/clients/file`, {
+    data: {
+      name
+    },
+    auth: true
+  })
+  
+  if(!response.ok) return null
+  
+  return response
+}

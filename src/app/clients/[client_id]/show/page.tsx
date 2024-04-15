@@ -1,8 +1,10 @@
 import { Box, Button, Typography } from "@mui/material"
-import { getClient } from "@/api/clients"
+import { clientFolder, getClient } from "@/api/clients"
+import { FilesTable } from "./files-table"
 
 export default async function Page({params}:{params: {client_id: string}}) {
   const client = await getClient(params.client_id)
+  const folder = await clientFolder(params.client_id)
 
   return client ? (
     <>
@@ -18,9 +20,7 @@ export default async function Page({params}:{params: {client_id: string}}) {
       <Typography variant="h4">
         Archivos
       </Typography>
-      <Box width='100%' height={200} bgcolor='gray'>
-
-      </Box>
+      <FilesTable files={folder} clientId={params.client_id} />
     </>
   ) : 'Error cargando el cliente'
 }
