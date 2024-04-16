@@ -8,7 +8,7 @@ export default async function Home() {
   
   return (
     <main>
-      Hello world {session.name}
+      Hola {session.name}, bienvenido al panel Hepic!
     </main>
   );
 }
