@@ -12,6 +12,16 @@ export const getClientForm = async (id:string) => {
   return await response.json()
 }
 
+export const generateAvm = async (id:string) => {
+  const response = await GET(`/generators/avm/${id}`, {
+    auth: true
+  })
+
+  if(!response.ok) return false
+
+  return true
+}
+
 export const updateClientForm = async (id: string, form: any) => {
   const response = await PATCH(`/client-forms/${id}`, {
     data: form,

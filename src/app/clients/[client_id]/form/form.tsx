@@ -19,7 +19,7 @@ import { TrippleTextArray } from "@/components/TrippleTextArray";
 import { DoubleSelectArray } from "@/components/DoubleSelectArray";
 import { FullTextField } from "@/components/FullTextField";
 import { FourTextArray } from "@/components/FourTextArray";
-import { ActSaveForm } from "./actions";
+import { ActGenerateAVM, ActSaveForm } from "./actions";
 import { validateRequired } from "@/app/helpers";
 
 const Form = styled("form")((theme) => ({
@@ -87,7 +87,12 @@ export const ClientForm = ({
     setError(false);
     const result = await ActSaveForm(formClient.id, formClient);
     // Generate file
-    if (result) window.location.href = `/clients/${client_id}/show`;
+    if (result) {
+      const generate = await ActGenerateAVM(client_id)
+
+      if(generate) window.location.href = `/clients/${client_id}/show`;
+      else setError(true)
+    }
     else setError(true);
   };
 
