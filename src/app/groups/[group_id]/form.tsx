@@ -1,7 +1,7 @@
 "use client";
 import { Box, Button, TextField, Typography, styled } from "@mui/material";
 import { useState } from "react";
-import { ActUpdateUser } from "./actions";
+import { ActUpdateClient } from "./actions";
 import { useRouter } from "next/navigation";
 
 const Form = styled("form")((theme) => ({
@@ -14,23 +14,23 @@ const Field = styled(TextField)(() => ({
   maxWidth: 500,
 }));
 
-export const UsersForm = (user: any | null) => {
+export const ClientForm = (client: any | null) => {
   const router = useRouter();
-  const [formuUser, setFormUser] = useState(user.user);
+  const [formClient, setFormClient] = useState(client.client);
   const [error, setError] = useState(false);
 
   const handleChange = (event: any) => {
-    setFormUser({
-      ...formuUser,
+    setFormClient({
+      ...formClient,
       [event.target.name]: event.target.value,
     });
   };
 
   const handleSubmit = async () => {
     setError(false);
-    const result = await ActUpdateUser(formuUser.id, formuUser);
+    const result = await ActUpdateClient(formClient.id, formClient);
 
-    if (result) window.location.href = "/users";
+    if (result) window.location.href = "/clients";
     else setError(true);
   };
 
@@ -40,26 +40,11 @@ export const UsersForm = (user: any | null) => {
         onChange={handleChange}
         name="name"
         label="Nombre"
-        value={formuUser.name}
+        value={formClient.name}
         required
-      />
-      <Field
-        onChange={handleChange}
-        type="email"
-        name="email"
-        label="Email"
-        value={formuUser.email}
-        required
-      />
-      <Field
-        onChange={handleChange}
-        type="password"
-        name="password"
-        label="Contraseña"
-        value={formuUser.password}
       />
       {error ? (
-        <Typography color="error">Hubo un error salvando el usuario</Typography>
+        <Typography color="error">Hubo un error salvando el cliente</Typography>
       ) : (
         <></>
       )}
@@ -77,7 +62,7 @@ export const UsersForm = (user: any | null) => {
         </Button>
         <Button
           variant="outlined"
-          href="/users"
+          href="/clients"
         >
           Cancelar
         </Button>

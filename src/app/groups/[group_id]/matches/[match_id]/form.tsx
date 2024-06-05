@@ -1,7 +1,7 @@
 "use client";
 import { Box, Button, TextField, Typography, styled } from "@mui/material";
-import { FormEvent, useState } from "react";
-import { ActCreateUser } from "./actions";
+import { useState } from "react";
+import { ActUpdateClient } from "./actions";
 import { useRouter } from "next/navigation";
 
 const Form = styled("form")((theme) => ({
@@ -14,46 +14,37 @@ const Field = styled(TextField)(() => ({
   maxWidth: 500,
 }));
 
-export const UsersForm = () => {
+export const ClientForm = (client: any | null) => {
   const router = useRouter();
+  const [formClient, setFormClient] = useState(client.client);
   const [error, setError] = useState(false);
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    setError(false);
-    const formData = new FormData(event.currentTarget)
-    const user = {
-      email: formData.get('email')?.toString(),
-      name: formData.get('name')?.toString(),
-      password: formData.get('password')?.toString(),
-    }
-    const result = await ActCreateUser(user);
+  const handleChange = (event: any) => {
+    setFormClient({
+      ...formClient,
+      [event.target.name]: event.target.value,
+    });
+  };
 
-    if (result) router.push("/users");
+  const handleSubmit = async () => {
+    setError(false);
+    const result = await ActUpdateClient(formClient.id, formClient);
+
+    if (result) window.location.href = "/clients";
     else setError(true);
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       <Field
+        onChange={handleChange}
         name="name"
         label="Nombre"
-        required
-      />
-      <Field
-        type="email"
-        name="email"
-        label="Email"
-        required
-      />
-      <Field
-        type="password"
-        name="password"
-        label="Contraseña"
+        value={formClient.name}
         required
       />
       {error ? (
-        <Typography color="error">Hubo un error salvando el usuario</Typography>
+        <Typography color="error">Hubo un error salvando el cliente</Typography>
       ) : (
         <></>
       )}
@@ -67,11 +58,11 @@ export const UsersForm = () => {
           variant="contained"
           type="submit"
         >
-          Crear
+          Guardar
         </Button>
         <Button
           variant="outlined"
-          href="/users"
+          href="/clients"
         >
           Cancelar
         </Button>

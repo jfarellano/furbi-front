@@ -5,10 +5,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 const SESSION_DURATION =  3600 * 1000
 
-export async function login(email: string, password: string) : Promise<string|null> {
+export async function login(phone: string, password: string) : Promise<string|null> {
   const response = await POST('/auth/login', {
     data: {
-      email,
+      phone,
       password
     } 
   })
@@ -21,6 +21,16 @@ export async function login(email: string, password: string) : Promise<string|nu
   cookies().set("session", access_token, { expires });
 
   return access_token
+}
+
+export async function register(body: any) : Promise<boolean> {
+  const response = await POST('/auth/register', {
+    data: body
+  })
+
+  if (!response.ok) return false
+
+  return true
 }
 
 export async function logout() {

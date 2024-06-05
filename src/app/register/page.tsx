@@ -1,7 +1,7 @@
 "use client"
 import { Button, TextField, Typography, useTheme } from "@mui/material"
 import { FormEvent, useEffect, useState } from "react"
-import { ActGetSession, ActLoging } from "./actions"
+import { ActGetSession, ActRegister } from "./actions"
 import { useRouter } from "next/navigation"
 
 export default function Page() {
@@ -17,24 +17,25 @@ export default function Page() {
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const result = await ActLoging(new FormData(event.currentTarget))
+    const result = await ActRegister(new FormData(event.currentTarget))
     if(!result) setError(true)
     else router.push('/')
   }
 
   return (
     <>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <form style={{
         display: 'flex',
         flexDirection: 'column',
         gap: theme.spacing(2)
       }} onSubmit={handleSubmit}>
         <TextField type="number" name="phone" label="Phone" required />
+        <TextField type="text" name="name" label="Name" required />
         <TextField type="password" name="password" label="Password" required />
-        { error ? <Typography fontSize={12} color='error'>Incorrect credentials</Typography> : <></>}
-        <Button variant="contained" type="submit">Login</Button>
-        <Button variant="outlined" href="/register">Register</Button>
+        { error ? <Typography fontSize={12} color='error'>There was an error creating your user</Typography> : <></>}
+        <Button variant="contained" type="submit">Register</Button>
+        <Button variant="outlined" href="/login">Cancel</Button>
       </form>
     </>
   )

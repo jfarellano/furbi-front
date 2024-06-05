@@ -10,8 +10,8 @@ import { CssBaseline } from "@mui/material";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Hepic",
-  description: "Gestor de procesos Hepic",
+  title: "Furbi",
+  description: "Manage your footbal matches",
 };
 
 export default function RootLayout({children}:{children:React.ReactNode}) {

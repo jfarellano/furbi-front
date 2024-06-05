@@ -20,10 +20,15 @@ const menuItems: MenuItem[] = [
   }
 ]
 
+const boxPaths = [
+  '/login',
+  '/register'
+]
+
 export const Layout = ({children}:{children: React.ReactNode}) =>  {
   const pathname = usePathname()
  
-  if (pathname.includes('/login')) return <CentralBox>{children}</CentralBox>
+  if (boxPaths.includes(pathname)) return <CentralBox>{children}</CentralBox>
 
   return (
     <SideBar>

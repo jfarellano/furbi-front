@@ -12,6 +12,26 @@ export const getUsers = async () => {
   return await response.json()
 }
 
+export const getPositions = async () => {
+  const response = await GET('/users/positions', {
+    auth: true
+  })
+
+  if(!response.ok) return null
+
+  return await response.json()
+}
+
+export const getProfile = async () => {
+  const response = await GET('/users/profile', {
+    auth: true
+  })
+
+  if(!response.ok) return null
+
+  return await response.json()
+}
+
 export const getUser = async (id:string) => {
   const response = await GET(`/users/${id}`, {
     auth: true
