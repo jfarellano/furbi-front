@@ -2,6 +2,37 @@
 
 import { DELETE, GET, PATCH, POST } from "../fetch"
 
+export const confirmMatch = async (id: string) => {
+  const response = await POST(`/matches/${id}/confirm`, {
+    auth: true
+  })
+
+  if(!response.ok) return null
+  
+  return await response.json()
+}
+
+
+export const joinMatch = async (id: string) => {
+  const response = await POST(`/matches/${id}/join`, {
+    auth: true
+  })
+
+  if(!response.ok) return null
+
+  return await response.json()
+}
+
+export const exitMatch = async (id: string) => {
+  const response = await POST(`/matches/${id}/exit`, {
+    auth: true
+  })
+
+  if(!response.ok) return null
+
+  return await response.json()
+}
+
 export const getMatches = async (id: string) => {
   const response = await GET(`/matches?group=${id}`, {
     auth: true
